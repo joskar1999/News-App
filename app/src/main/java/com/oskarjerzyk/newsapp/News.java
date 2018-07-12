@@ -3,7 +3,7 @@ package com.oskarjerzyk.newsapp;
 public class News {
 
     private String header;
-    private String newsURL;
+    private String url;
     private String image;
 
     public News() {
@@ -11,7 +11,7 @@ public class News {
 
     public News(String header, String newsURL, String image) {
         this.header = header;
-        this.newsURL = newsURL;
+        this.url = newsURL;
         this.image = image;
     }
 
@@ -23,12 +23,12 @@ public class News {
         this.header = header;
     }
 
-    public String getNewsURL() {
-        return newsURL;
+    public String getUrl() {
+        return url;
     }
 
-    public void setNewsURL(String newsURL) {
-        this.newsURL = newsURL;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getImage() {

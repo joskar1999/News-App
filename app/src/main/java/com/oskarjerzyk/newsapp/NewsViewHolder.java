@@ -10,7 +10,7 @@ import com.squareup.picasso.Picasso;
 
 public class NewsViewHolder extends RecyclerView.ViewHolder {
 
-    View view;
+    public View view;
 
     public NewsViewHolder(View itemView) {
         super(itemView);

@@ -1,23 +1,17 @@
 package com.oskarjerzyk.newsapp;
 
-import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,9 +72,24 @@ public class MainActivity extends AppCompatActivity {
 
                 viewHolder.setHeader(model.getHeader());
                 viewHolder.setImage(getApplicationContext(), model.getImage());
+
+                final String newsURL = model.getUrl();
+
+                viewHolder.view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        openUrlInBrowser(newsURL);
+                    }
+                });
             }
         };
 
         recyclerView.setAdapter(firebaseRecyclerAdapter);
+    }
+
+    private void openUrlInBrowser(String url) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+        browserIntent.setData(Uri.parse(url));
+        startActivity(browserIntent);
     }
 }
