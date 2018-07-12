@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,37 +15,43 @@ public class MainActivity extends AppCompatActivity {
     Context context;
     ArrayList progList;
 
-    public List<Integer> progImages;
-    public List<String> progNames;
+    private List<String> progImages;
+    private List<String> progHeaders;
+    private List<String> progURLs;
+
+    private Spidersweb spidersweb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        progNames = new ArrayList<String>();
-        progImages = new ArrayList<Integer>();
+        progHeaders = new ArrayList<String>();
+        progImages = new ArrayList<String>();
+        progURLs = new ArrayList<String>();
 
-        /*progImages.add(R.drawable.ikona);
-        progImages.add(R.drawable.zd);
-        progImages.add(R.drawable.ikona);
-        progImages.add(R.drawable.zd);
-        progImages.add(R.drawable.ikona);
-        progImages.add(R.drawable.zd);*/
+        try {
+            spidersweb = new Spidersweb();
+        } catch (IOException e) {
+            e.printStackTrace(); //@TODO if fails, provide some screen with error message
+        }
+
+        try {
+            spidersweb.downloadAllURLs();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+//        progHeaders.add("Object");
+//        progHeaders.add("Class");
+//        progHeaders.add("Object");
+//        progHeaders.add("Class");
+//        progHeaders.add("Object");
+//        progHeaders.add("Class");
 
 
-        progNames.add("Object");
-        progNames.add("Class");
-        progNames.add("Object");
-        progNames.add("Class");
-        progNames.add("Object");
-        progNames.add("Class");
-
-
-        MyListAdapter adapter = new MyListAdapter(this,progNames,progImages);
-
-        lv = (ListView) findViewById(R.id.listView2);
-
-        lv.setAdapter(adapter);
+//        MyListAdapter adapter = new MyListAdapter(this, progHeaders, progImages);
+//        lv = (ListView) findViewById(R.id.listView2);
+//        lv.setAdapter(adapter);
     }
 }
