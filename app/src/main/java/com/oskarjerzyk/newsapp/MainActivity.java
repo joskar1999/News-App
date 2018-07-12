@@ -5,10 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
@@ -81,26 +83,4 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(firebaseRecyclerAdapter);
     }
-
-    public static class NewsViewHolder extends RecyclerView.ViewHolder {
-
-        View view;
-
-        public NewsViewHolder(View itemView) {
-            super(itemView);
-            view = itemView;
-        }
-
-        public void setHeader(String header) {
-            TextView newsHeader = (TextView) view.findViewById(R.id.news_header);
-            newsHeader.setText(header);
-        }
-
-        public void setImage(Context context, String image) {
-            ImageView newsImage = (ImageView) view.findViewById(R.id.news_image);
-            Picasso.with(context).load(image).into(newsImage);
-        }
-    }
-
-
 }
