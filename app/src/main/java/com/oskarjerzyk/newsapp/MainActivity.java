@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,8 +15,12 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
         progURLs = new ArrayList<String>();
 
         mLayoutManager = new LinearLayoutManager(MainActivity.this);
-        mLayoutManager.setReverseLayout(true);
-        mLayoutManager.setStackFromEnd(true);
+//        mLayoutManager.setReverseLayout(true);
+//        mLayoutManager.setStackFromEnd(true);
 
         recyclerView = (RecyclerView) findViewById(R.id.news_list);
         recyclerView.setHasFixedSize(true);
@@ -123,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 progHeaders = spidersweb.getHeadersList();
                 progImages = spidersweb.getImageURLList();
                 progURLs = spidersweb.getLinks();
+                sendSpiderswebDataToFirebase();
             } catch (IOException e) {
                 Toast.makeText(MainActivity.this, "Spidersweb Error", Toast.LENGTH_LONG).show();
             }
@@ -141,5 +147,31 @@ public class MainActivity extends AppCompatActivity {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW);
         browserIntent.setData(Uri.parse(url));
         startActivity(browserIntent);
+    }
+
+    private void sendSpiderswebDataToFirebase() {
+
+        for (int i = 0; i < 10; i++) {
+
+            final int j = i;
+            Query query = database.orderByChild("header").equalTo(progHeaders.get(i));
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (!dataSnapshot.exists()){
+                        DatabaseReference newNews = database.push();
+                        newNews.child("header").setValue(progHeaders.get(j));
+                        newNews.child("image").setValue(progImages.get(j));
+                        newNews.child("url").setValue(progURLs.get(j));
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        }
     }
 }
