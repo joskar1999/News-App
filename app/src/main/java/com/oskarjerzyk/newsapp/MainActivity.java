@@ -1,7 +1,9 @@
 package com.oskarjerzyk.newsapp;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +17,10 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
+
+    private ProgressDialog progressDialog;
 
     private List<String> progImages;
     private List<String> progHeaders;
@@ -89,10 +97,44 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.action_refresh) {
-            Toast.makeText(MainActivity.this, "Refresh clicked", Toast.LENGTH_LONG).show();
+            new RefreshNews().execute();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class RefreshNews extends AsyncTask<Void, Void, Void> {
+
+        String pageTitle;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setTitle("News App");
+            progressDialog.setMessage("News loading...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            try {
+                Document document = Jsoup.connect("https://www.spidersweb.pl").get();
+                pageTitle = document.title();
+            } catch (IOException e) {
+                Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_LONG).show();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            progressDialog.dismiss();
+            Toast.makeText(MainActivity.this, pageTitle, Toast.LENGTH_LONG).show();
+        }
     }
 
     private void openUrlInBrowser(String url) {
