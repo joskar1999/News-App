@@ -53,6 +53,7 @@ public class Spidersweb {
         for (Element element : allImageLinks) {
             imageURLList.add(element.attr("data-src"));
         }
+        imageURLList.remove(0);
     }
 
     private void downloadHeaders() throws IOException {
@@ -62,6 +63,7 @@ public class Spidersweb {
         }
         headersList.remove(0);
         headersList.remove(0);
+        headersList.remove(0);
     }
 
     private void downloadLinks() throws IOException {
@@ -69,6 +71,7 @@ public class Spidersweb {
         for (Element element : allLinks) {
             links.add(element.attr("href"));
         }
+        links.remove(0);
         links.remove(0);
         links.remove(0);
     }

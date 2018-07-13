@@ -17,9 +17,6 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private List<String> progImages;
     private List<String> progHeaders;
     private List<String> progURLs;
+
+    private Spidersweb spidersweb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,8 +104,6 @@ public class MainActivity extends AppCompatActivity {
 
     private class RefreshNews extends AsyncTask<Void, Void, Void> {
 
-        String pageTitle;
-
         @Override
         protected void onPreExecute() {
 
@@ -121,10 +118,13 @@ public class MainActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
 
             try {
-                Document document = Jsoup.connect("https://www.spidersweb.pl").get();
-                pageTitle = document.title();
+                spidersweb = new Spidersweb();
+                spidersweb.downloadAllURLs();
+                progHeaders = spidersweb.getHeadersList();
+                progImages = spidersweb.getImageURLList();
+                progURLs = spidersweb.getLinks();
             } catch (IOException e) {
-                Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Spidersweb Error", Toast.LENGTH_LONG).show();
             }
 
             return null;
@@ -134,7 +134,6 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
 
             progressDialog.dismiss();
-            Toast.makeText(MainActivity.this, pageTitle, Toast.LENGTH_LONG).show();
         }
     }
 
