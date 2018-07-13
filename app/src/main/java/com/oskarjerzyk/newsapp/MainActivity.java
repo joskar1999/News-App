@@ -20,14 +20,11 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference database;
 
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
+    private LinearLayoutManager mLayoutManager;
 
     private List<String> progImages;
     private List<String> progHeaders;
     private List<String> progURLs;
-
-    //private Spidersweb spidersweb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,21 +37,13 @@ public class MainActivity extends AppCompatActivity {
         progImages = new ArrayList<String>();
         progURLs = new ArrayList<String>();
 
-//        try {
-//            spidersweb = new Spidersweb();
-//        } catch (IOException e) {
-//            e.printStackTrace(); //@TODO if fails, provide some screen with error message
-//        }
-//
-//        try {
-//            spidersweb.downloadAllURLs();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        mLayoutManager = new LinearLayoutManager(MainActivity.this);
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
 
         recyclerView = (RecyclerView) findViewById(R.id.news_list);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(mLayoutManager);
     }
 
     @Override
