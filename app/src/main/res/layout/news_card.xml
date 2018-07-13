@@ -21,9 +21,11 @@
             android:id="@+id/news_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
             android:inputType="textMultiLine"
             android:padding="8dp"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur nulla metus, mattis id interdum sit amet"
+            android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold" />
 

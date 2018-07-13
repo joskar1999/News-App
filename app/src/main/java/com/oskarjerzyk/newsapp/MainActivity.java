@@ -109,8 +109,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            super.onPreExecute();
 
+            super.onPreExecute();
             progressDialog = new ProgressDialog(MainActivity.this);
             progressDialog.setTitle("News App");
             progressDialog.setMessage("News loading...");
@@ -132,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+
             progressDialog.dismiss();
             Toast.makeText(MainActivity.this, pageTitle, Toast.LENGTH_LONG).show();
         }
