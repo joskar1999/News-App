@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
         progURLs = new ArrayList<String>();
 
         mLayoutManager = new LinearLayoutManager(MainActivity.this);
-//        mLayoutManager.setReverseLayout(true);
-//        mLayoutManager.setStackFromEnd(true);
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
 
         recyclerView = (RecyclerView) findViewById(R.id.news_list);
         recyclerView.setHasFixedSize(true);
@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void sendSpiderswebDataToFirebase() {
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
 
             final int j = i;
             Query query = database.orderByChild("header").equalTo(progHeaders.get(i));

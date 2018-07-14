@@ -49,15 +49,16 @@ public class Spidersweb {
      * @throws IOException - could be thrown by select method.
      */
     private void downloadImages() throws IOException {
-        Elements allImageLinks = this.document.select("img.b-lazy");
+        Elements allImageLinks = this.document.select("div > article > div > a > img");
         for (Element element : allImageLinks) {
             imageURLList.add(element.attr("data-src"));
         }
         imageURLList.remove(0);
+        imageURLList.remove(0);
     }
 
     private void downloadHeaders() throws IOException {
-        Elements allHeaders = document.select(".postlink-inner");
+        Elements allHeaders = document.select("article > div > h1 > a > span > span");
         for (Element element : allHeaders) {
             headersList.add(element.text());
         }
@@ -67,11 +68,10 @@ public class Spidersweb {
     }
 
     private void downloadLinks() throws IOException {
-        Elements allLinks = document.select(".single-permalink");
+        Elements allLinks = document.select("div > article > div > a");
         for (Element element : allLinks) {
             links.add(element.attr("href"));
         }
-        links.remove(0);
         links.remove(0);
         links.remove(0);
     }
