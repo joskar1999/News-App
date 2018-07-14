@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/sidebar_account"
+        android:icon="@drawable/account_icon"
+        android:title="Account" />
+
+    <item
+        android:id="@+id/sidebar_favourites"
+        android:icon="@drawable/favourite_icon"
+        android:title="Favourites" />
+
+    <item
+        android:id="@+id/sidebar_read_later"
+        android:icon="@drawable/bookmark_icon"
+        android:title="Read later" />
+
+    <item
+        android:id="@+id/sidebar_settings"
+        android:icon="@drawable/settings_icon"
+        android:title="Settings" />
+
+    <item
+        android:id="@+id/sidebar_logout"
+        android:icon="@drawable/logout_icon"
+        android:title="Log Out" />
+
+</menu>
