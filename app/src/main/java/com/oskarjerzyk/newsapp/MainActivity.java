@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private List<String> progURLs;
 
     private Spidersweb spidersweb;
+    private Forbes forbes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,9 +143,20 @@ public class MainActivity extends AppCompatActivity {
                 progHeaders = spidersweb.getHeadersList();
                 progImages = spidersweb.getImageURLList();
                 progURLs = spidersweb.getLinks();
-                sendSpiderswebDataToFirebase();
+                sendDataToFirebase();
             } catch (IOException e) {
                 Toast.makeText(MainActivity.this, "Spidersweb Error", Toast.LENGTH_LONG).show();
+            }
+
+            try {
+                forbes = new Forbes();
+                forbes.downloadAllURLs();
+                progHeaders = forbes.getHeadersList();
+                progImages = forbes.getImageURLList();
+                progURLs = forbes.getLinks();
+                sendDataToFirebase();
+            }catch (IOException e){
+                Toast.makeText(MainActivity.this, "Forbes Error", Toast.LENGTH_LONG).show();
             }
 
             return null;
@@ -163,9 +175,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(browserIntent);
     }
 
-    private void sendSpiderswebDataToFirebase() {
+    private void sendDataToFirebase() {
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 10; i++) {
 
             final int j = i;
             Query query = database.orderByChild("header").equalTo(progHeaders.get(i));

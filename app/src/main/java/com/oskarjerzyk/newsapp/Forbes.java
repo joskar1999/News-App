@@ -25,7 +25,25 @@ public class Forbes {
         links = new ArrayList<String>();
     }
 
-    public void downloadHeaders() {
+    public List<String> getImageURLList() {
+        return imageURLList;
+    }
+
+    public List<String> getHeadersList() {
+        return headersList;
+    }
+
+    public List<String> getLinks() {
+        return links;
+    }
+
+    public void downloadAllURLs(){
+        downloadHeaders();
+        downloadLinks();
+        downloadImages();
+    }
+
+    private void downloadHeaders() {
         Elements allHeaders = document.select(".itemTitle");
         int j = 0;
         for (Element element : allHeaders) {
@@ -34,12 +52,9 @@ public class Forbes {
                 break;
             }
         }
-        for (int i = 0; i < headersList.size(); i++) {
-            System.out.println(headersList.get(i));
-        }
     }
 
-    public void downloadLinks() {
+    private void downloadLinks() {
         Elements allLinks = document.select("div > a");
         int j = 0;
         for (Element element : allLinks) {
@@ -48,22 +63,21 @@ public class Forbes {
                 break;
             }
         }
-        for (int i = 0; i < links.size(); i++) {
-            System.out.println(links.get(i));
-        }
     }
 
-    public void downloadImages() {
+    private void downloadImages() {
+        String https = "https:";
         Elements allImages = document.select(".itemImage");
         int j = 0;
         for (Element element : allImages) {
-            imageURLList.add(element.attr("data-original"));
-            if (++j == 21){
+            if (element.attr("data-original").substring(0, 6).equals(https)) {
+                imageURLList.add(element.attr("data-original"));
+            } else {
+                imageURLList.add(https + element.attr("data-original"));
+            }
+            if (++j == 21) {
                 break;
             }
-        }
-        for (int i = 0; i < imageURLList.size(); i++) {
-            System.out.println(imageURLList.get(i));
         }
     }
 }
