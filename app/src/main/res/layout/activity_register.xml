@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:theme="@style/NoActionBarTheme"
+    tools:context=".RegisterActivity">
+
+    <TextView
+        android:id="@+id/news_app_textview_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:fontFamily="@font/lato_regular_font"
+        android:text="NEWS APP"
+        android:textColor="@android:color/white"
+        android:textSize="36sp" />
+
+    <EditText
+        android:id="@+id/register_email_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/news_app_textview_register"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="60dp"
+        android:backgroundTint="@android:color/white"
+        android:drawableLeft="@drawable/email_icon"
+        android:drawablePadding="5sp"
+        android:fontFamily="@font/lato_regular_font"
+        android:hint="Email ..."
+        android:inputType="textEmailAddress"
+        android:padding="20dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white" />
+
+    <EditText
+        android:id="@+id/register_password_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/register_email_edittext"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@android:color/white"
+        android:drawableLeft="@drawable/lock_icon"
+        android:drawablePadding="5sp"
+        android:fontFamily="@font/lato_regular_font"
+        android:hint="Password ..."
+        android:inputType="textPassword"
+        android:padding="20dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white" />
+
+    <Button
+        android:id="@+id/signin_button_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/register_password_edittext"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/button_style"
+        android:fontFamily="@font/lato_regular_font"
+        android:text="sign up"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+    <ImageButton
+        android:id="@+id/return_button_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/signin_button_register"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/return_button" />
+
+</RelativeLayout>

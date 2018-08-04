@@ -9,7 +9,7 @@
     tools:context=".WelcomeActivity">
 
     <TextView
-        android:id="@+id/welcome_to_app_textview"
+        android:id="@+id/welcome_to_app_textview_welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -21,10 +21,10 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/news_app_textview"
+        android:id="@+id/news_app_textview_welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/welcome_to_app_textview"
+        android:layout_below="@+id/welcome_to_app_textview_welcome"
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/lato_regular_font"
         android:text="NEWS APP"
@@ -36,7 +36,7 @@
         android:id="@+id/signin_welcome_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/news_app_textview"
+        android:layout_below="@+id/news_app_textview_welcome"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
         android:background="@drawable/button_style"
