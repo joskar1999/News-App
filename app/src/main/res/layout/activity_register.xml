@@ -75,6 +75,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:background="@android:color/transparent"
+        android:padding="10dp"
         android:src="@drawable/return_button" />
 
 </RelativeLayout>
