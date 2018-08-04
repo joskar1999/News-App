@@ -18,6 +18,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +34,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DatabaseReference database;
+    private FirebaseAuth firebaseAuth;
 
     private RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
@@ -55,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         database = FirebaseDatabase.getInstance().getReference().child("News");
+        firebaseAuth = FirebaseAuth.getInstance();
 
         progHeaders = new ArrayList<String>();
         progImages = new ArrayList<String>();
@@ -87,6 +91,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onStart() {
         super.onStart();
 
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+
+        if (currentUser == null) {
+            sendToWelcomeActivity();
+        }
+
         FirebaseRecyclerAdapter<News, NewsViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<News, NewsViewHolder>(
                 News.class,
                 R.layout.news_card,
@@ -111,6 +121,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         };
 
         recyclerView.setAdapter(firebaseRecyclerAdapter);
+    }
+
+    private void sendToWelcomeActivity() {
+        Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
+        startActivity(welcomeIntent);
+        finish();
     }
 
     @Override
@@ -154,11 +170,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             }
             case R.id.sidebar_logout: {
+                logout();
                 break;
             }
         }
 
         return false;
+    }
+
+    /**
+     * Log out and send user to WelcomeActivity
+     */
+    private void logout() {
+        firebaseAuth.signOut();
+        Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
+        startActivity(welcomeIntent);
+        finish();
     }
 
     /**
