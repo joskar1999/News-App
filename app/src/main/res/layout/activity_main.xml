@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#827717"
+        android:background="#FFFFFF"
         app:headerLayout="@layout/sidebar_header"
         app:menu="@menu/sidebar_menu">
 
