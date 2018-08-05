@@ -165,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (item.getItemId()) {
             case R.id.sidebar_account: {
+                openAccountActivity();
                 break;
             }
             case R.id.sidebar_favourites: {
@@ -183,6 +184,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         return false;
+    }
+
+    private void openAccountActivity() {
+        Intent accountIntent = new Intent(MainActivity.this, AccountActivity.class);
+        startActivity(accountIntent);
     }
 
     /**

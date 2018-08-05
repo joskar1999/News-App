@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/NoActionBarTheme">
         <activity
             android:name=".MainActivity"
             android:theme="@style/NoActionBarTheme">
@@ -20,15 +20,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".WelcomeActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".RegisterActivity" />
         <activity
-            android:name=".WelcomeActivity"
-            android:theme="@style/NoActionBarTheme" />
+            android:name=".AccountActivity"
+            android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".LoginActivity"
-            android:theme="@style/NoActionBarTheme" />
-        <activity
-            android:name=".RegisterActivity"
-            android:theme="@style/NoActionBarTheme"></activity>
+            android:name=".EditAccountActivity"
+            android:parentActivityName=".AccountActivity"></activity>
     </application>
 
 </manifest>
