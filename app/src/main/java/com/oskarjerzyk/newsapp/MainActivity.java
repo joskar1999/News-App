@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private NavigationView navigationView;
+    private Toolbar toolbar;
 
     private ProgressDialog progressDialog;
 
@@ -64,6 +66,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         progImages = new ArrayList<String>();
         progURLs = new ArrayList<String>();
 
+        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
+
         mLayoutManager = new LinearLayoutManager(MainActivity.this);
         mLayoutManager.setReverseLayout(true);
         mLayoutManager.setStackFromEnd(true);
@@ -84,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     /**
+     * Checking if user is currently logged in,
+     * if not, will bee send to welcome screen.
      * Setting up RecyclerView, displaying newses
      * downloaded from Firebase
      */
