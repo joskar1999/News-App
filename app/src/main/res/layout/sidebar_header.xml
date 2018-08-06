@@ -1,28 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="140dp"
+    android:layout_height="180dp"
     android:background="@color/colorPrimary"
     android:orientation="vertical">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_imageview_sidebar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/adrian" />
 
     <TextView
         android:id="@+id/sidebar_header_name_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:text="Jan Kowalski"
+        android:layout_below="@+id/profile_imageview_sidebar"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/lato_regular_font"
+        android:text="Andrzej Duda"
         android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/sidebar_header_email_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/sidebar_header_name_textview"
-        android:padding="20dp"
-        android:text="jan.kowalski@gmail.com"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/lato_regular_font"
+        android:text="adrian.xd@gmail.com"
         android:textColor="#FFFFFF"
-        android:textSize="14sp" />
+        android:textSize="12sp" />
 
 </RelativeLayout>

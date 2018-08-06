@@ -23,19 +23,19 @@
         android:src="@drawable/blank" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="215dp"
+        android:layout_marginTop="210dp"
         android:src="@android:color/white" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/add_image_button_editaccount"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_photo_button_editaccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="220dp"
-        android:src="@drawable/floating_button" />
+        android:layout_marginTop="215dp"
+        android:src="@drawable/add_icon" />
 
     <LinearLayout
         android:id="@+id/name_layout_editaccount"
