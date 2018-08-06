@@ -77,7 +77,7 @@ public class EditAccountActivity extends AppCompatActivity {
         String address = addressEditText.getText().toString();
 
         String UID = firebaseAuth.getUid().toString();
-        DatabaseReference newData = database.child(UID);
+        DatabaseReference newData = database.child(UID).child("personal-data");
 
         if (!TextUtils.isEmpty(forename) && !TextUtils.isEmpty(name) &&
                 !TextUtils.isEmpty(phone) && !TextUtils.isEmpty(address)) {

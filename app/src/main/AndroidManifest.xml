@@ -28,7 +28,8 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".EditAccountActivity"
-            android:parentActivityName=".AccountActivity"></activity>
+            android:parentActivityName=".AccountActivity" />
+        <activity android:name=".SetupActivity"></activity>
     </application>
 
 </manifest>

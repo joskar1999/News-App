@@ -93,7 +93,9 @@ public class RegisterActivity extends AppCompatActivity {
      */
     private void addUserToDatabase(String email) {
         String UID = firebaseAuth.getUid().toString();
-        DatabaseReference newUser = database.child(UID);
+        DatabaseReference newUser = database.child(UID).child("personal-data");
+        DatabaseReference configured = database.child(UID).child("configured");
         newUser.child("email").setValue(email);
+        configured.setValue("false");
     }
 }

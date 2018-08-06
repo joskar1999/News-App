@@ -35,6 +35,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DatabaseReference database;
+    private DatabaseReference databaseUsers;
     private FirebaseAuth firebaseAuth;
 
     private RecyclerView recyclerView;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         database = FirebaseDatabase.getInstance().getReference().child("News");
+        databaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
         firebaseAuth = FirebaseAuth.getInstance();
 
         progHeaders = new ArrayList<String>();
@@ -92,7 +94,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * Checking if user is currently logged in,
      * if not, will bee send to welcome screen.
      * Setting up RecyclerView, displaying newses
-     * downloaded from Firebase
+     * downloaded from Firebase.
+     * If user is currently logged in and his account
+     * have not been set up yet, will be send to
+     * SetupActivity, if account is properly set up,
+     * user will see MainActivity screen
      */
     @Override
     protected void onStart() {
@@ -103,6 +109,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (currentUser == null) {
             sendToWelcomeActivity();
         }
+
+        String UID = firebaseAuth.getUid().toString();
+        DatabaseReference configuredRef = databaseUsers.child(UID).child("configured");
+
+        configuredRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String configured = dataSnapshot.getValue(String.class);
+                if (configured.equals("false")) {
+                    sendToSetupActivity();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         FirebaseRecyclerAdapter<News, NewsViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<News, NewsViewHolder>(
                 News.class,
@@ -128,6 +152,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         };
 
         recyclerView.setAdapter(firebaseRecyclerAdapter);
+    }
+
+    private void sendToSetupActivity() {
+        Intent setupIntent = new Intent(MainActivity.this, SetupActivity.class);
+        startActivity(setupIntent);
     }
 
     private void sendToWelcomeActivity() {
