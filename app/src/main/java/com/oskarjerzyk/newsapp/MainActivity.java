@@ -186,6 +186,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return false;
     }
 
+    /**
+     * This method prevents user from coming back to
+     * WelcomeActivity after logging in when the back
+     * button is pressed
+     */
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
+
     private void openAccountActivity() {
         Intent accountIntent = new Intent(MainActivity.this, AccountActivity.class);
         startActivity(accountIntent);
