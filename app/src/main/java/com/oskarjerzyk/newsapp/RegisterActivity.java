@@ -15,10 +15,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    FirebaseAuth firebaseAuth;
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference database;
 
     private Button registerButton;
     private ImageButton returnButton;
@@ -31,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance().getReference().child("Users");
 
         registerButton = (Button) findViewById(R.id.signin_button_register);
         returnButton = (ImageButton) findViewById(R.id.return_button_register);
@@ -53,8 +57,12 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Registration new user with email and password
+     * Error message when registration fails
+     */
     private void registerNewUser() {
-        String email = emailEditText.getText().toString();
+        final String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
@@ -63,6 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+                                addUserToDatabase(email);
                                 Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);
                                 startActivity(mainIntent);
                                 finish();
@@ -74,5 +83,17 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
             Toast.makeText(RegisterActivity.this, "Email and Pasword have to be provided!", Toast.LENGTH_LONG).show();
         }
+    }
+
+    /**
+     * Storing user in database as Users child
+     * user id is UID get from FirebaseAuth
+     *
+     * @param email - get from EditText in method registerNewUser()
+     */
+    private void addUserToDatabase(String email) {
+        String UID = firebaseAuth.getUid().toString();
+        DatabaseReference newUser = database.child(UID);
+        newUser.child("email").setValue(email);
     }
 }
