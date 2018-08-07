@@ -53,6 +53,14 @@ public class SetupActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * All EditTexts have to be completed
+     * if not, error message will be shown
+     * and hint become red. If all fields completed
+     * data will be stored in database and configured
+     * value set to true, then user will be send
+     * to MainActivity
+     */
     private void storeUserDataInDatabase() {
         String forename = forenameEditText.getText().toString();
         String name = nameEditText.getText().toString();

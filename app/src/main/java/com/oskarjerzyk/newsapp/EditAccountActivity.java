@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -52,7 +51,7 @@ public class EditAccountActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                storeUserDataInDatabase();
+                updateUserDataInDatabase();
             }
         });
 
@@ -66,11 +65,11 @@ public class EditAccountActivity extends AppCompatActivity {
 
     /**
      * Data provided by user will be stored in database,
-     * if certain field wil be empty, hint become red
-     * if data was provided properly, user will be
-     * send to AccountActivity
+     * user do not have to complete all fields,
+     * when data is stored, user will be send
+     * to AccountActivity
      */
-    private void storeUserDataInDatabase() {
+    private void updateUserDataInDatabase() {
         String forename = forenameEditText.getText().toString();
         String name = nameEditText.getText().toString();
         String phone = phoneEditText.getText().toString();
@@ -79,31 +78,20 @@ public class EditAccountActivity extends AppCompatActivity {
         String UID = firebaseAuth.getUid().toString();
         DatabaseReference newData = database.child(UID).child("personal-data");
 
-        if (!TextUtils.isEmpty(forename) && !TextUtils.isEmpty(name) &&
-                !TextUtils.isEmpty(phone) && !TextUtils.isEmpty(address)) {
-
+        if (!TextUtils.isEmpty(forename)) {
             newData.child("forename").setValue(forename);
-            newData.child("name").setValue(name);
-            newData.child("phone").setValue(phone);
-            newData.child("address").setValue(address);
-
-            sendToAccountActivity();
-        } else {
-            Toast.makeText(EditAccountActivity.this, "You have to complete highlighted fields", Toast.LENGTH_LONG).show();
-            //@TODO check if key exists in database - do not make text red then
-            if (TextUtils.isEmpty(forename)) {
-                forenameEditText.setHintTextColor(getResources().getColor(R.color.colorError));
-            }
-            if (TextUtils.isEmpty(name)) {
-                nameEditText.setHintTextColor(getResources().getColor(R.color.colorError));
-            }
-            if (TextUtils.isEmpty(phone)) {
-                phoneEditText.setHintTextColor(getResources().getColor(R.color.colorError));
-            }
-            if (TextUtils.isEmpty(address)) {
-                addressEditText.setHintTextColor(getResources().getColor(R.color.colorError));
-            }
         }
+        if (!TextUtils.isEmpty(name)) {
+            newData.child("name").setValue(name);
+        }
+        if (!TextUtils.isEmpty(phone)) {
+            newData.child("phone").setValue(phone);
+        }
+        if (!TextUtils.isEmpty(address)) {
+            newData.child("address").setValue(address);
+        }
+
+        sendToAccountActivity();
     }
 
     private void sendToAccountActivity() {
