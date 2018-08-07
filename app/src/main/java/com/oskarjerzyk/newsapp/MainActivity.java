@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -27,16 +28,24 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DatabaseReference database;
     private DatabaseReference databaseUsers;
     private FirebaseAuth firebaseAuth;
+
+    private CircleImageView sidebarImageView;
+    private TextView nameTextView;
+    private TextView emailTextView;
+    private View sidebarHeaderView;
 
     private RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
@@ -54,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private Spidersweb spidersweb;
     private Forbes forbes;
+
+    private PersonalData personalData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +99,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView = (NavigationView) findViewById(R.id.sidebar_navigation);
         navigationView.setNavigationItemSelectedListener(this);
+        sidebarHeaderView = navigationView.getHeaderView(0);
+
+        sidebarImageView = (CircleImageView) sidebarHeaderView.findViewById(R.id.profile_imageview_sidebar);
+        nameTextView = (TextView) sidebarHeaderView.findViewById(R.id.sidebar_header_name_textview);
+        emailTextView = (TextView) sidebarHeaderView.findViewById(R.id.sidebar_header_email_textview);
+
+        personalData = new PersonalData();
     }
 
     /**
@@ -106,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
+        //checking if user is currently logged in
         if (currentUser == null) {
             sendToWelcomeActivity();
         }
@@ -113,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String UID = firebaseAuth.getUid().toString();
         DatabaseReference configuredRef = databaseUsers.child(UID).child("configured");
 
+        //checking if configured value is set to false
         configuredRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -120,6 +140,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (configured.equals("false")) {
                     sendToSetupActivity();
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        //loading data into sidebar header
+        DatabaseReference sidebarDatabase = databaseUsers.child(UID).child("personal-data");
+        sidebarDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                personalData = dataSnapshot.getValue(PersonalData.class);
+                nameTextView.setText(personalData.getForename() + " " + personalData.getName());
+                emailTextView.setText(personalData.getEmail());
+                Picasso.with(MainActivity.this).load(personalData.getImage()).into(sidebarImageView);
             }
 
             @Override

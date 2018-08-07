@@ -10,8 +10,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/adrian" />
+        android:layout_marginTop="20dp" />
 
     <TextView
         android:id="@+id/sidebar_header_name_textview"
@@ -21,7 +20,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/lato_regular_font"
-        android:text="Andrzej Duda"
         android:textColor="#FFFFFF"
         android:textSize="20sp" />
 
@@ -33,7 +31,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/lato_regular_font"
-        android:text="adrian.xd@gmail.com"
         android:textColor="#FFFFFF"
         android:textSize="12sp" />
 
