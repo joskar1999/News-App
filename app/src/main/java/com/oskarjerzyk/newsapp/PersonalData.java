@@ -7,8 +7,17 @@ public class PersonalData {
     private String name;
     private String phone;
     private String address;
+    private String image;
 
     public PersonalData() {
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getEmail() {

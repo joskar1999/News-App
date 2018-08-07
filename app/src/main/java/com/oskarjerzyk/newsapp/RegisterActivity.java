@@ -96,6 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
         DatabaseReference newUser = database.child(UID).child("personal-data");
         DatabaseReference configured = database.child(UID).child("configured");
         newUser.child("email").setValue(email);
+        newUser.child("image").setValue("https://firebasestorage.googleapis.com/v0/b/newsapp-96088.appspot.com/o/Images%2Fblank.jpg?alt=media&token=c66a571d-6c96-43ca-94f2-373840541c5a");
         configured.setValue("false");
     }
 }
