@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
@@ -89,6 +91,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerView = (RecyclerView) findViewById(R.id.news_list);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(mLayoutManager);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_main);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                updateUIWithNews();
+            }
+        });
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
@@ -214,13 +224,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getItemId() == R.id.action_refresh) {
-            new RefreshNews().execute();
-        } else if (toggle.onOptionsItemSelected(item)) {
+        //required for sidebar opening
+        if (toggle.onOptionsItemSelected(item)) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Method used to refresh view in MainActivity
+     * with latest news. Method is called by refresh icon
+     * and swipe gesture
+     */
+    private void updateUIWithNews() {
+        new RefreshNews().execute();
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     /**
@@ -241,6 +260,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             }
             case R.id.sidebar_settings: {
+                break;
+            }
+            case R.id.sidebar_refresh: {
+                swipeRefreshLayout.setRefreshing(true);
+                updateUIWithNews();
                 break;
             }
             case R.id.sidebar_logout: {
@@ -284,18 +308,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     private class RefreshNews extends AsyncTask<Void, Void, Void> {
 
-        /**
-         * When refresh icon is clicked, this method
-         * will display ProgressDialog with proper message
-         */
         @Override
         protected void onPreExecute() {
-
             super.onPreExecute();
-            progressDialog = new ProgressDialog(MainActivity.this);
-            progressDialog.setTitle("News App");
-            progressDialog.setMessage("News loading...");
-            progressDialog.show();
         }
 
         /**
@@ -331,14 +346,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return null;
         }
 
-        /**
-         * After executing all functions
-         * ProgressDialog will dismiss
-         */
         @Override
         protected void onPostExecute(Void aVoid) {
-
-            progressDialog.dismiss();
         }
     }
 

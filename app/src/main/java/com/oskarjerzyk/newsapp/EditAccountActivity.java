@@ -58,7 +58,7 @@ public class EditAccountActivity extends AppCompatActivity {
         addPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //TODO get image from gallery then store it in database and update download url
             }
         });
     }
@@ -70,6 +70,7 @@ public class EditAccountActivity extends AppCompatActivity {
      * to AccountActivity
      */
     private void updateUserDataInDatabase() {
+        //TODO set hint to current value stored in database
         String forename = forenameEditText.getText().toString();
         String name = nameEditText.getText().toString();
         String phone = phoneEditText.getText().toString();

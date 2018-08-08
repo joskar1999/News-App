@@ -22,6 +22,11 @@
         android:title="Settings" />
 
     <item
+        android:id="@+id/sidebar_refresh"
+        android:icon="@drawable/refresh_icon"
+        android:title="Refresh" />
+
+    <item
         android:id="@+id/sidebar_logout"
         android:icon="@drawable/logout_icon"
         android:title="Log Out" />
