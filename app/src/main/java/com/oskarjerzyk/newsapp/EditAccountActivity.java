@@ -1,6 +1,7 @@
 package com.oskarjerzyk.newsapp;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,10 +10,15 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class EditAccountActivity extends AppCompatActivity {
 
@@ -27,6 +33,9 @@ public class EditAccountActivity extends AppCompatActivity {
     private EditText nameEditText;
     private EditText phoneEditText;
     private EditText addressEditText;
+    private ImageView photoImageView;
+
+    private PersonalData personalData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +56,7 @@ public class EditAccountActivity extends AppCompatActivity {
         nameEditText = (EditText) findViewById(R.id.name_edittext_editaccount);
         phoneEditText = (EditText) findViewById(R.id.phone_edittext_editaccount);
         addressEditText = (EditText) findViewById(R.id.address_edittext_editaccount);
+        photoImageView = (ImageView) findViewById(R.id.photo_imageview_editaccount);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +71,33 @@ public class EditAccountActivity extends AppCompatActivity {
                 //TODO get image from gallery then store it in database and update download url
             }
         });
+
+        personalData = new PersonalData();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        String UID = firebaseAuth.getUid().toString();
+        DatabaseReference hintDatabase = database.child(UID).child("personal-data");
+
+        hintDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                personalData = dataSnapshot.getValue(PersonalData.class);
+                forenameEditText.setHint(personalData.getForename());
+                nameEditText.setHint(personalData.getName());
+                phoneEditText.setHint(personalData.getPhone());
+                addressEditText.setHint(personalData.getAddress());
+                Picasso.with(EditAccountActivity.this).load(personalData.getImage()).into(photoImageView);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     /**
@@ -70,7 +107,6 @@ public class EditAccountActivity extends AppCompatActivity {
      * to AccountActivity
      */
     private void updateUserDataInDatabase() {
-        //TODO set hint to current value stored in database
         String forename = forenameEditText.getText().toString();
         String name = nameEditText.getText().toString();
         String phone = phoneEditText.getText().toString();

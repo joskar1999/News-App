@@ -238,7 +238,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * and swipe gesture
      */
     private void updateUIWithNews() {
-        new RefreshNews().execute();
         swipeRefreshLayout.setRefreshing(false);
     }
 
@@ -346,8 +345,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return null;
         }
 
+        /**
+         * Disabling swipe refresh icon after downloading newses
+         */
         @Override
         protected void onPostExecute(Void aVoid) {
+            new RefreshNews().execute();
         }
     }
 
