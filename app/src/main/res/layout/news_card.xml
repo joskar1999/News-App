@@ -18,17 +18,46 @@
             android:scaleType="centerCrop"
             android:src="@drawable/simple_news" />
 
-        <TextView
-            android:id="@+id/news_header"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
-            android:inputType="textMultiLine"
-            android:padding="8dp"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur nulla metus, mattis id interdum sit amet"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:background="@color/colorAccent">
+
+            <TextView
+                android:id="@+id/news_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/news_bookmark"
+                android:background="@color/colorAccent"
+                android:fontFamily="@font/lato_regular_font"
+                android:inputType="textMultiLine"
+                android:padding="8dp"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/news_bookmark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/news_favourite"
+                android:background="@android:color/transparent"
+                android:padding="10dp"
+                android:src="@drawable/bookmark_icon_white" />
+
+            <ImageButton
+                android:id="@+id/news_favourite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:padding="10dp"
+                android:src="@drawable/favourite_icon_white" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 
