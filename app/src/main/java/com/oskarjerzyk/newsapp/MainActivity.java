@@ -39,8 +39,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private DatabaseReference database;
+    private DatabaseReference databaseNews;
     private DatabaseReference databaseUsers;
+    private DatabaseReference databaseReadLater;
+    private DatabaseReference databaseFavourites;
     private FirebaseAuth firebaseAuth;
 
     private CircleImageView sidebarImageView;
@@ -68,13 +70,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private PersonalData personalData;
 
+    private boolean readLaterProcess = false;
+    private boolean favouriteProcess = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        database = FirebaseDatabase.getInstance().getReference().child("News");
+        databaseNews = FirebaseDatabase.getInstance().getReference().child("News");
         databaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
+        databaseReadLater = FirebaseDatabase.getInstance().getReference().child("Read-Later");
+        databaseFavourites = FirebaseDatabase.getInstance().getReference().child("Favourites");
         firebaseAuth = FirebaseAuth.getInstance();
 
         progHeaders = new ArrayList<String>();
@@ -133,13 +140,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onStart();
 
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        final String UID = firebaseAuth.getUid().toString();
 
         //checking if user is currently logged in
         if (currentUser == null) {
             sendToWelcomeActivity();
         }
 
-        String UID = firebaseAuth.getUid().toString();
         DatabaseReference configuredRef = databaseUsers.child(UID).child("configured");
 
         //checking if configured value is set to false
@@ -179,20 +186,83 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 News.class,
                 R.layout.news_card,
                 NewsViewHolder.class,
-                database
+                databaseNews
         ) {
             @Override
-            protected void populateViewHolder(NewsViewHolder viewHolder, News model, int position) {
+            protected void populateViewHolder(final NewsViewHolder viewHolder, News model, int position) {
+
+                final String newsURL = model.getUrl();
+                final String newsKey = getRef(position).getKey();
 
                 viewHolder.setHeader(model.getHeader());
                 viewHolder.setImage(getApplicationContext(), model.getImage());
-
-                final String newsURL = model.getUrl();
+                viewHolder.setBookmarkButtonIcon(newsKey);
+                viewHolder.setFavouriteButtonIcon(newsKey);
 
                 viewHolder.view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         openUrlInBrowser(newsURL);
+                    }
+                });
+
+                //Adding news to read later section
+                viewHolder.bookmarkButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        readLaterProcess = true;
+
+                        databaseReadLater.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                if (readLaterProcess) {
+                                    if (dataSnapshot.child(newsKey).hasChild(UID)) {
+                                        databaseReadLater.child(newsKey).child(UID).removeValue();
+                                        readLaterProcess = false;
+                                    } else {
+                                        databaseReadLater.child(newsKey).child(UID).setValue("true");
+                                        readLaterProcess = false;
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                });
+
+                //Adding news to favourites section
+                viewHolder.favouriteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        favouriteProcess = true;
+
+                        databaseFavourites.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                if (favouriteProcess) {
+                                    if (dataSnapshot.child(newsKey).hasChild(UID)) {
+                                        databaseFavourites.child(newsKey).child(UID).removeValue();
+                                        favouriteProcess = false;
+                                    } else {
+                                        databaseFavourites.child(newsKey).child(UID).setValue("true");
+                                        favouriteProcess = false;
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
                     }
                 });
             }
@@ -376,12 +446,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         for (int i = 0; i < 10; i++) {
 
             final int j = i;
-            Query query = database.orderByChild("header").equalTo(progHeaders.get(i));
+            Query query = databaseNews.orderByChild("header").equalTo(progHeaders.get(i));
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (!dataSnapshot.exists()) {
-                        DatabaseReference newNews = database.push();
+                        DatabaseReference newNews = databaseNews.push();
                         newNews.child("header").setValue(progHeaders.get(j));
                         newNews.child("image").setValue(progImages.get(j));
                         newNews.child("url").setValue(progURLs.get(j));
