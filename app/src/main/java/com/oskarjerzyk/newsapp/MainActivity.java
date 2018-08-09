@@ -238,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * and swipe gesture
      */
     private void updateUIWithNews() {
-        swipeRefreshLayout.setRefreshing(false);
+        new RefreshNews().execute();
     }
 
     /**
@@ -331,16 +331,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(MainActivity.this, "Spidersweb Error", Toast.LENGTH_LONG).show();
             }
 
-            try {
-                forbes = new Forbes();
-                forbes.downloadAllURLs();
-                progHeaders = forbes.getHeadersList();
-                progImages = forbes.getImageURLList();
-                progURLs = forbes.getLinks();
-                sendDataToFirebase();
-            } catch (IOException e) {
-                Toast.makeText(MainActivity.this, "Forbes Error", Toast.LENGTH_LONG).show();
-            }
+//            try {
+//                forbes = new Forbes();
+//                forbes.downloadAllURLs();
+//                progHeaders = forbes.getHeadersList();
+//                progImages = forbes.getImageURLList();
+//                progURLs = forbes.getLinks();
+//                sendDataToFirebase();
+//            } catch (IOException e) {
+//                Toast.makeText(MainActivity.this, "Forbes Error", Toast.LENGTH_LONG).show();
+//            }
 
             return null;
         }
@@ -350,7 +350,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
          */
         @Override
         protected void onPostExecute(Void aVoid) {
-            new RefreshNews().execute();
+            swipeRefreshLayout.setRefreshing(false);
         }
     }
 
