@@ -41,8 +41,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private DatabaseReference databaseNews;
     private DatabaseReference databaseUsers;
-    private DatabaseReference databaseReadLater;
-    private DatabaseReference databaseFavourites;
     private FirebaseAuth firebaseAuth;
 
     private CircleImageView sidebarImageView;
@@ -51,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private View sidebarHeaderView;
 
     private RecyclerView recyclerView;
-    private LinearLayoutManager mLayoutManager;
+    private LinearLayoutManager layoutManager;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     private DrawerLayout drawerLayout;
@@ -80,8 +78,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         databaseNews = FirebaseDatabase.getInstance().getReference().child("News");
         databaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
-        databaseReadLater = FirebaseDatabase.getInstance().getReference().child("Read-Later");
-        databaseFavourites = FirebaseDatabase.getInstance().getReference().child("Favourites");
         firebaseAuth = FirebaseAuth.getInstance();
 
         progHeaders = new ArrayList<String>();
@@ -91,13 +87,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
 
-        mLayoutManager = new LinearLayoutManager(MainActivity.this);
-        mLayoutManager.setReverseLayout(true);
-        mLayoutManager.setStackFromEnd(true);
+        layoutManager = new LinearLayoutManager(MainActivity.this);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
 
         recyclerView = (RecyclerView) findViewById(R.id.news_list);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setLayoutManager(layoutManager);
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_main);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -149,7 +145,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         final String UID = firebaseAuth.getUid().toString();
+
         DatabaseReference configuredRef = databaseUsers.child(UID).child("configured");
+        final DatabaseReference databaseReadLater = databaseUsers.child(UID).child("read-later");
+        final DatabaseReference databaseFavourites = databaseUsers.child(UID).child("favourites");
 
         //checking if configured value is set to false
         configuredRef.addValueEventListener(new ValueEventListener() {
@@ -220,11 +219,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                                 if (readLaterProcess) {
-                                    if (dataSnapshot.child(newsKey).hasChild(UID)) {
-                                        databaseReadLater.child(newsKey).child(UID).removeValue();
+                                    if (dataSnapshot.hasChild(newsKey)) {
+                                        databaseReadLater.child(newsKey).removeValue();
                                         readLaterProcess = false;
                                     } else {
-                                        databaseReadLater.child(newsKey).child(UID).setValue("true");
+                                        databaseReadLater.child(newsKey).setValue("true");
                                         readLaterProcess = false;
                                     }
                                 }
@@ -250,11 +249,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                                 if (favouriteProcess) {
-                                    if (dataSnapshot.child(newsKey).hasChild(UID)) {
-                                        databaseFavourites.child(newsKey).child(UID).removeValue();
+                                    if (dataSnapshot.hasChild(newsKey)) {
+                                        databaseFavourites.child(newsKey).removeValue();
                                         favouriteProcess = false;
                                     } else {
-                                        databaseFavourites.child(newsKey).child(UID).setValue("true");
+                                        databaseFavourites.child(newsKey).setValue("true");
                                         favouriteProcess = false;
                                     }
                                 }

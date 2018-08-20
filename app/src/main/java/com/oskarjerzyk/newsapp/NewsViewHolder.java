@@ -32,9 +32,10 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
         bookmarkButton = (ImageButton) view.findViewById(R.id.news_bookmark);
         favouriteButton = (ImageButton) view.findViewById(R.id.news_favourite);
 
-        readLaterDatabase = FirebaseDatabase.getInstance().getReference().child("Read-Later");
-        favouriteDatabase = FirebaseDatabase.getInstance().getReference().child("Favourites");
         firebaseAuth = FirebaseAuth.getInstance();
+        String UID = firebaseAuth.getUid().toString();
+        readLaterDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(UID).child("read-later");
+        favouriteDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(UID).child("favourites");
     }
 
     public void setHeader(String header) {
@@ -53,7 +54,7 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if (dataSnapshot.child(newsKey).hasChild(firebaseAuth.getCurrentUser().getUid())) {
+                if (dataSnapshot.hasChild(newsKey)) {
                     bookmarkButton.setImageResource(R.drawable.bookmark_filled);
                 } else {
                     bookmarkButton.setImageResource(R.drawable.bookmark_icon_white);
@@ -73,7 +74,7 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if (dataSnapshot.child(newsKey).hasChild(firebaseAuth.getCurrentUser().getUid())) {
+                if (dataSnapshot.hasChild(newsKey)) {
                     favouriteButton.setImageResource(R.drawable.favourite_filled);
                 } else {
                     favouriteButton.setImageResource(R.drawable.favourite_icon_white);
