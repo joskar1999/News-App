@@ -30,7 +30,9 @@
         <activity
             android:name=".EditAccountActivity"
             android:parentActivityName=".AccountActivity" />
-        <activity android:name=".SetupActivity"></activity>
+        <activity android:name=".SetupActivity" />
+        <activity android:name=".FavouritesActivity" />
+        <activity android:name=".ReadLaterActivity"></activity>
     </application>
 
 </manifest>

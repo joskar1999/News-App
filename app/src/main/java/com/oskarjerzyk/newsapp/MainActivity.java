@@ -139,14 +139,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onStart() {
         super.onStart();
 
+        //TODO limit displaying posts amount
+
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        final String UID = firebaseAuth.getUid().toString();
 
         //checking if user is currently logged in
         if (currentUser == null) {
             sendToWelcomeActivity();
         }
 
+        final String UID = firebaseAuth.getUid().toString();
         DatabaseReference configuredRef = databaseUsers.child(UID).child("configured");
 
         //checking if configured value is set to false
