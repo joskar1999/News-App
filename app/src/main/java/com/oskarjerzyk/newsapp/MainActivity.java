@@ -325,9 +325,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             }
             case R.id.sidebar_favourites: {
+                openFavouritesActivity();
                 break;
             }
             case R.id.sidebar_read_later: {
+                openReadLaterActivity();
                 break;
             }
             case R.id.sidebar_settings: {
@@ -345,6 +347,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         return false;
+    }
+
+    private void openReadLaterActivity() {
+        Intent readLaterIntent = new Intent(MainActivity.this, ReadLaterActivity.class);
+        startActivity(readLaterIntent);
+    }
+
+    private void openFavouritesActivity() {
+        Intent favouritesIntent = new Intent(MainActivity.this, FavouritesActivity.class);
+        startActivity(favouritesIntent);
     }
 
     /**
