@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.oskarjerzyk.newsapp.adapter.FavouritesReadLaterAdapter;
 import com.oskarjerzyk.newsapp.model.News;
 import com.oskarjerzyk.newsapp.R;
 
@@ -21,14 +22,13 @@ import java.util.List;
 
 public class FavouritesActivity extends AppCompatActivity {
 
-    //TODO implement RecyclerView with favourites newses
-
     private DatabaseReference databaseUsers;
     private FirebaseAuth firebaseAuth;
 
     private Toolbar toolbar;
 
     private RecyclerView recyclerView;
+    private FavouritesReadLaterAdapter adapter;
     private LinearLayoutManager layoutManager;
 
     final List<News> listOfFavourites = new ArrayList<>();
@@ -50,9 +50,12 @@ public class FavouritesActivity extends AppCompatActivity {
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
 
+        adapter = new FavouritesReadLaterAdapter(this, listOfFavourites);
+
         recyclerView = (RecyclerView) findViewById(R.id.favourites_news_list);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
     }
 
     /**
@@ -89,6 +92,7 @@ public class FavouritesActivity extends AppCompatActivity {
                             news.setUrl(url);
 
                             listOfFavourites.add(news);
+                            adapter.notifyDataSetChanged();
                         }
 
                         @Override
