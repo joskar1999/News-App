@@ -183,7 +183,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        FirebaseRecyclerAdapter<News, NewsViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<News, NewsViewHolder>(
+        FirebaseRecyclerAdapter<News, NewsViewHolder> firebaseRecyclerAdapter
+                = new FirebaseRecyclerAdapter<News, NewsViewHolder>(
                 News.class,
                 R.layout.news_card,
                 NewsViewHolder.class,
