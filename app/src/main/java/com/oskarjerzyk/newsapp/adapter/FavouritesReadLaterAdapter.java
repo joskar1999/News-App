@@ -1,6 +1,8 @@
 package com.oskarjerzyk.newsapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +18,9 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class FavouritesReadLaterAdapter extends RecyclerView.Adapter<FavouritesReadLaterAdapter.FavouritesReadLaterViewHolder> {
+
+    //TODO send user to website after clicking on news
+    //TODO handle favourites and read later icon clicks
 
     private Context context;
     private List<News> newsList;
@@ -34,11 +39,23 @@ public class FavouritesReadLaterAdapter extends RecyclerView.Adapter<FavouritesR
         return new FavouritesReadLaterViewHolder(itemView);
     }
 
+    /**
+     * Setting image and header, assigning url to
+     * onClick in ImageView
+     */
     @Override
     public void onBindViewHolder(@NonNull FavouritesReadLaterViewHolder holder, int position) {
-        News news = newsList.get(position);
+        final News news = newsList.get(position);
         holder.headerTextView.setText(news.getHeader());
         Picasso.with(context).load(news.getImage()).into(holder.imageView);
+
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(news.getUrl()));
+                context.startActivity(browserIntent);
+            }
+        });
     }
 
     @Override

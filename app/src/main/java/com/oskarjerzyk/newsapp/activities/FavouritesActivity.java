@@ -93,6 +93,7 @@ public class FavouritesActivity extends AppCompatActivity {
 
                             listOfFavourites.add(news);
                             adapter.notifyDataSetChanged();
+                            //TODO send user to the top of the RecyclerView
                         }
 
                         @Override
@@ -108,5 +109,16 @@ public class FavouritesActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    /**
+     * List need to be cleared in case to prevent
+     * from duplicating items in RecyclerView
+     * after coming back from browser
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        listOfFavourites.clear();
     }
 }
