@@ -93,7 +93,7 @@ public class ReadLaterActivity extends AppCompatActivity {
 
                             listOfReadLater.add(news);
                             adapter.notifyDataSetChanged();
-                            //TODO send user to the top of the RecyclerView
+                            layoutManager.scrollToPositionWithOffset(listOfReadLater.size() - 1, 0);
                         }
 
                         @Override
@@ -120,5 +120,19 @@ public class ReadLaterActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         listOfReadLater.clear();
+    }
+
+    /**
+     * Scrolling to the top, then returning
+     * to MainActivity
+     */
+    @Override
+    public void onBackPressed() {
+        if (layoutManager.findFirstCompletelyVisibleItemPosition() == listOfReadLater.size() - 1
+                || layoutManager.findFirstCompletelyVisibleItemPosition() == listOfReadLater.size() - 2) {
+            super.onBackPressed();
+        } else {
+            recyclerView.smoothScrollToPosition(listOfReadLater.size() - 1);
+        }
     }
 }

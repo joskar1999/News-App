@@ -77,6 +77,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private boolean readLaterProcess = false;
     private boolean favouriteProcess = false;
 
+    private NewsSizeHolder newsListSize;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,6 +127,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         emailTextView = (TextView) sidebarHeaderView.findViewById(R.id.sidebar_header_email_textview);
 
         personalData = new PersonalData();
+
+        newsListSize = new NewsSizeHolder(0);
     }
 
     /**
@@ -276,6 +280,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         };
 
+        //Getting News list size
+        databaseNews.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int size = (int) dataSnapshot.getChildrenCount();
+                newsListSize.setSize(size);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         recyclerView.setAdapter(firebaseRecyclerAdapter);
     }
 
@@ -366,13 +384,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     /**
-     * This method prevents user from coming back to
-     * WelcomeActivity after logging in when the back
-     * button is pressed
+     * Scrolling to the top of the RecyclerView
+     * if user's position is other than first news,
+     * in other case sending user to desktop
      */
     @Override
     public void onBackPressed() {
-        moveTaskToBack(true);
+        if (layoutManager.findFirstCompletelyVisibleItemPosition() == newsListSize.getSize() - 1) {
+            super.onBackPressed();
+        } else {
+            recyclerView.smoothScrollToPosition(newsListSize.getSize() - 1);
+        }
     }
 
     private void openAccountActivity() {
@@ -436,11 +458,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         /**
-         * Disabling swipe refresh icon after downloading newses
+         * Disabling swipe refresh icon after downloading newses,
+         * then sending user to the top of the RecyclerView
          */
         @Override
         protected void onPostExecute(Void aVoid) {
             swipeRefreshLayout.setRefreshing(false);
+            recyclerView.smoothScrollToPosition(newsListSize.getSize() - 1);
         }
     }
 
@@ -484,6 +508,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             });
 
+        }
+    }
+
+    /**
+     * This class is used to get data from
+     * anonymous class which has final access
+     */
+    private class NewsSizeHolder {
+        int size;
+
+        public NewsSizeHolder(int size) {
+            this.size = size;
+        }
+
+        public int getSize() {
+            return size;
+        }
+
+        public void setSize(int size) {
+            this.size = size;
         }
     }
 }

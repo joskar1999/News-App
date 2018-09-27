@@ -93,7 +93,7 @@ public class FavouritesActivity extends AppCompatActivity {
 
                             listOfFavourites.add(news);
                             adapter.notifyDataSetChanged();
-                            //TODO send user to the top of the RecyclerView
+                            layoutManager.scrollToPositionWithOffset(listOfFavourites.size() - 1, 0);
                         }
 
                         @Override
@@ -120,5 +120,19 @@ public class FavouritesActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         listOfFavourites.clear();
+    }
+
+    /**
+     * Scrolling to the top, then returning
+     * to MainActivity
+     */
+    @Override
+    public void onBackPressed() {
+        if (layoutManager.findFirstCompletelyVisibleItemPosition() == listOfFavourites.size() - 1
+                || layoutManager.findFirstCompletelyVisibleItemPosition() == listOfFavourites.size() - 2) {
+            super.onBackPressed();
+        } else {
+            recyclerView.smoothScrollToPosition(listOfFavourites.size() - 1);
+        }
     }
 }
