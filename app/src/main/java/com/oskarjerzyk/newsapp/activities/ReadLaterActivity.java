@@ -1,8 +1,10 @@
-package com.oskarjerzyk.newsapp;
+package com.oskarjerzyk.newsapp.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+
+import com.oskarjerzyk.newsapp.R;
 
 public class ReadLaterActivity extends AppCompatActivity {
 

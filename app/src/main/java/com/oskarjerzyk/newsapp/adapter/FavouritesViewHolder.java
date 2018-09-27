@@ -1,4 +1,4 @@
-package com.oskarjerzyk.newsapp;
+package com.oskarjerzyk.newsapp.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.oskarjerzyk.newsapp.R;
 import com.squareup.picasso.Picasso;
 
 public class FavouritesViewHolder extends RecyclerView.ViewHolder {

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:theme="@style/NoActionBarTheme"
-    tools:context=".WelcomeActivity">
+    tools:context=".activities.WelcomeActivity">
 
     <TextView
         android:id="@+id/welcome_to_app_textview_welcome"

@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBarTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:theme="@style/NoActionBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,22 +21,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WelcomeActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".activities.WelcomeActivity" />
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.RegisterActivity" />
         <activity
-            android:name=".AccountActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name=".activities.AccountActivity"
+            android:parentActivityName=".activities.MainActivity" />
         <activity
-            android:name=".EditAccountActivity"
-            android:parentActivityName=".AccountActivity" />
-        <activity android:name=".SetupActivity" />
+            android:name=".activities.EditAccountActivity"
+            android:parentActivityName=".activities.AccountActivity" />
+        <activity android:name=".activities.SetupActivity" />
         <activity
-            android:name=".FavouritesActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name=".activities.FavouritesActivity"
+            android:parentActivityName=".activities.MainActivity" />
         <activity
-            android:name=".ReadLaterActivity"
-            android:parentActivityName=".MainActivity"></activity>
+            android:name=".activities.ReadLaterActivity"
+            android:parentActivityName=".activities.MainActivity"></activity>
     </application>
 
 </manifest>

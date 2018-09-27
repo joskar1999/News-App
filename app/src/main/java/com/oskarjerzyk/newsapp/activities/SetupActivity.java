@@ -1,4 +1,4 @@
-package com.oskarjerzyk.newsapp;
+package com.oskarjerzyk.newsapp.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.oskarjerzyk.newsapp.R;
 
 public class SetupActivity extends AppCompatActivity {
 

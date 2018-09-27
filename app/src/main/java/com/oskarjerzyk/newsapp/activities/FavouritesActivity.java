@@ -1,4 +1,4 @@
-package com.oskarjerzyk.newsapp;
+package com.oskarjerzyk.newsapp.activities;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +13,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.oskarjerzyk.newsapp.model.News;
+import com.oskarjerzyk.newsapp.R;
 
 import java.util.ArrayList;
 import java.util.List;

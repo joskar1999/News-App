@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:theme="@style/NoActionBarTheme"
-    tools:context=".RegisterActivity">
+    tools:context=".activities.RegisterActivity">
 
     <TextView
         android:id="@+id/news_app_textview_register"

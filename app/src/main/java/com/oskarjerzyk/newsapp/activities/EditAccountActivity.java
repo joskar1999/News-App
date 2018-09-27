@@ -1,4 +1,4 @@
-package com.oskarjerzyk.newsapp;
+package com.oskarjerzyk.newsapp.activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -23,6 +23,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.oskarjerzyk.newsapp.model.PersonalData;
+import com.oskarjerzyk.newsapp.R;
 
 public class EditAccountActivity extends AppCompatActivity {
 

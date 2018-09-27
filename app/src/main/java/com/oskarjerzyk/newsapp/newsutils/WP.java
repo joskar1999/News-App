@@ -1,4 +1,4 @@
-package com.oskarjerzyk.newsapp;
+package com.oskarjerzyk.newsapp.newsutils;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;

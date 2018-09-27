@@ -1,4 +1,4 @@
-package com.oskarjerzyk.newsapp;
+package com.oskarjerzyk.newsapp.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -29,6 +29,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.oskarjerzyk.newsapp.newsutils.Forbes;
+import com.oskarjerzyk.newsapp.model.News;
+import com.oskarjerzyk.newsapp.adapter.NewsViewHolder;
+import com.oskarjerzyk.newsapp.model.PersonalData;
+import com.oskarjerzyk.newsapp.R;
+import com.oskarjerzyk.newsapp.newsutils.Spidersweb;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
