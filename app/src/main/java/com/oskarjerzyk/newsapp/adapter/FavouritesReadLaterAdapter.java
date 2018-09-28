@@ -11,15 +11,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.oskarjerzyk.newsapp.R;
 import com.oskarjerzyk.newsapp.model.News;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class FavouritesReadLaterAdapter extends RecyclerView.Adapter<FavouritesReadLaterAdapter.FavouritesReadLaterViewHolder> {
 
-    //TODO send user to website after clicking on news
     //TODO handle favourites and read later icon clicks
 
     private Context context;
@@ -47,7 +46,7 @@ public class FavouritesReadLaterAdapter extends RecyclerView.Adapter<FavouritesR
     public void onBindViewHolder(@NonNull FavouritesReadLaterViewHolder holder, int position) {
         final News news = newsList.get(position);
         holder.headerTextView.setText(news.getHeader());
-        Picasso.with(context).load(news.getImage()).into(holder.imageView);
+        Glide.with(context).load(news.getImage()).into(holder.imageView);
 
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override

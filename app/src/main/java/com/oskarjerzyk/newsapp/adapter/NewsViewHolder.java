@@ -8,6 +8,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,7 +16,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.oskarjerzyk.newsapp.R;
-import com.squareup.picasso.Picasso;
 
 public class NewsViewHolder extends RecyclerView.ViewHolder {
 
@@ -46,7 +46,7 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
 
     public void setImage(Context context, String image) {
         ImageView newsImage = (ImageView) view.findViewById(R.id.news_image);
-        Picasso.with(context).load(image).into(newsImage);
+        Glide.with(context).load(image).into(newsImage);
     }
 
     public void setBookmarkButtonIcon(final String newsKey) {

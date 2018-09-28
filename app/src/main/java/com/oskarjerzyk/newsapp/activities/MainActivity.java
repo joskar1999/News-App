@@ -4,13 +4,13 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,13 +30,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.oskarjerzyk.newsapp.newsutils.Forbes;
-import com.oskarjerzyk.newsapp.model.News;
-import com.oskarjerzyk.newsapp.adapter.NewsViewHolder;
-import com.oskarjerzyk.newsapp.model.PersonalData;
 import com.oskarjerzyk.newsapp.R;
+import com.oskarjerzyk.newsapp.adapter.NewsViewHolder;
+import com.oskarjerzyk.newsapp.model.News;
+import com.oskarjerzyk.newsapp.model.PersonalData;
+import com.oskarjerzyk.newsapp.newsutils.Forbes;
 import com.oskarjerzyk.newsapp.newsutils.Spidersweb;
-import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 personalData = dataSnapshot.getValue(PersonalData.class);
                 nameTextView.setText(personalData.getForename() + " " + personalData.getName());
                 emailTextView.setText(personalData.getEmail());
-                Picasso.with(MainActivity.this).load(personalData.getImage()).into(sidebarImageView);
+                Glide.with(MainActivity.this).load(personalData.getImage()).into(sidebarImageView);
             }
 
             @Override
@@ -443,17 +443,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(MainActivity.this, "Spidersweb Error", Toast.LENGTH_LONG).show();
             }
 
-//            try {
-//                forbes = new Forbes();
-//                forbes.downloadAllURLs();
-//                progHeaders = forbes.getHeadersList();
-//                progImages = forbes.getImageURLList();
-//                progURLs = forbes.getLinks();
-//                sendDataToFirebase();
-//            } catch (IOException e) {
-//                Toast.makeText(MainActivity.this, "Forbes Error", Toast.LENGTH_LONG).show();
-//            }
-
             return null;
         }
 
@@ -507,7 +496,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 }
             });
-
         }
     }
 
