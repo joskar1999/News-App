@@ -14,6 +14,7 @@
         android:theme="@style/NoActionBarTheme">
         <activity
             android:name=".activities.MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,22 +22,34 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.WelcomeActivity" />
-        <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.RegisterActivity" />
+        <activity
+            android:name=".activities.WelcomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.RegisterActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.AccountActivity"
-            android:parentActivityName=".activities.MainActivity" />
+            android:parentActivityName=".activities.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.EditAccountActivity"
-            android:parentActivityName=".activities.AccountActivity" />
-        <activity android:name=".activities.SetupActivity" />
+            android:parentActivityName=".activities.AccountActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.SetupActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.FavouritesActivity"
-            android:parentActivityName=".activities.MainActivity" />
+            android:parentActivityName=".activities.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ReadLaterActivity"
-            android:parentActivityName=".activities.MainActivity"></activity>
+            android:parentActivityName=".activities.MainActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
