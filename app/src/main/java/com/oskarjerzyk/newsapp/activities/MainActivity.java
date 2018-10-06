@@ -488,6 +488,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         newNews.child("header").setValue(progHeaders.get(j));
                         newNews.child("image").setValue(progImages.get(j));
                         newNews.child("url").setValue(progURLs.get(j));
+
+                        newsListSize.setSize(newsListSize.getSize() + 1);
+                        recyclerView.smoothScrollToPosition(newsListSize.getSize() - 1);
                     }
                 }
 
