@@ -1,6 +1,8 @@
 package com.oskarjerzyk.newsapp.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -77,8 +79,10 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
 
                 if (dataSnapshot.hasChild(newsKey)) {
                     favouriteButton.setImageResource(R.drawable.favourite_filled);
+                    favouriteButton.setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
                 } else {
                     favouriteButton.setImageResource(R.drawable.favourite_icon_white);
+                    favouriteButton.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
                 }
             }
 
