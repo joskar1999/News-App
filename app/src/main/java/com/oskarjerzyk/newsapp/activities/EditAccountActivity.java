@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -116,7 +117,7 @@ public class EditAccountActivity extends AppCompatActivity {
      * Invoked after gallery intent
      * Chosen image will be set into ImageView
      * High resolution images will not be displayed - bug
-     * TODO fix high resolution bug
+     * TODO compress image before sending to database
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -124,7 +125,10 @@ public class EditAccountActivity extends AppCompatActivity {
 
         if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK) {
             imageUri = data.getData();
-            photoImageView.setImageURI(imageUri);
+            Glide
+                    .with(getApplicationContext())
+                    .load(imageUri)
+                    .into(photoImageView);
         }
     }
 

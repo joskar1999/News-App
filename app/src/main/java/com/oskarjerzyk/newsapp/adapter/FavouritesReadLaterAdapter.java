@@ -19,8 +19,6 @@ import java.util.List;
 
 public class FavouritesReadLaterAdapter extends RecyclerView.Adapter<FavouritesReadLaterAdapter.FavouritesReadLaterViewHolder> {
 
-    //TODO handle favourites and read later icon clicks
-
     private Context context;
     private List<News> newsList;
 
