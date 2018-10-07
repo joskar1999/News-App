@@ -34,7 +34,7 @@ public class FavouritesReadLaterAdapter extends RecyclerView.Adapter<FavouritesR
     public FavouritesReadLaterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.news_card, parent, false);
+                .inflate(R.layout.news_card_no_icons, parent, false);
         return new FavouritesReadLaterViewHolder(itemView);
     }
 
@@ -43,7 +43,7 @@ public class FavouritesReadLaterAdapter extends RecyclerView.Adapter<FavouritesR
      * onClick in ImageView
      */
     @Override
-    public void onBindViewHolder(@NonNull FavouritesReadLaterViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final FavouritesReadLaterViewHolder holder, int position) {
         final News news = newsList.get(position);
         holder.headerTextView.setText(news.getHeader());
         Glide.with(context).load(news.getImage()).into(holder.imageView);

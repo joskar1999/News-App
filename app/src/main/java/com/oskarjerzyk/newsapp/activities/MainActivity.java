@@ -145,8 +145,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onStart() {
         super.onStart();
 
-        //TODO limit displaying posts amount
-
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
         //checking if user is currently logged in
